@@ -14,16 +14,26 @@ phpshell.client = {
 	    		target = (!e.target) ? e.srcElement : e.target;
 				// enter pressed, without shift
 				if (!e.shiftKey && e.keyCode == 13) {
+					// add command to screen
+					var prompt = phpshell.client.exec_as_php() ? 'php$ ' : '$ ';
+					phpshell.client.addEntry(prompt+this.value);
+					// execute command
 					phpshell.client.sendCommand(this.value);
 					input.value = '';
 				}
 			};
 		};
 	},
+	
+	// check if we want to execute code as php
+	exec_as_php: function() {
+		return document.getElementById('php').checked;
+	},	
+	
 	// send a command
 	sendCommand: function(str) {
 		if (str) {
-			var php = document.getElementById('php').checked ? '1' : '0';
+			var php = phpshell.client.exec_as_php() ? '1' : '0';
 			var xhr = new phpshell.xhr;
 			xhr.req('POST', 'exec.php', phpshell.client.receiveResp);
 			xhr.send({
@@ -38,17 +48,21 @@ phpshell.client = {
 		if (req.xhr.readyState == 4) {
 			var resp = req.xhr.responseText;
 			if (resp) {
-				var results = document.getElementById('results');
-				var result = document.createElement('div');
-				results.appendChild(document.createTextNode(resp));
-				results.appendChild(result);
-				
+				phpshell.client.addEntry(resp);
 				phpshell.client.autoScroll(results, 500);
 			}
 		}
-		
 	},
 	
+	// add an etry
+	addEntry: function(str) {
+		var results = document.getElementById('results');
+		var result = document.createElement('div');
+		results.appendChild(document.createTextNode(str));
+		results.appendChild(result);
+	},
+	
+	// scroll down
 	autoScroll: function(el, offset) {
 		if (!offset) offset = 100;
 	    var y = el.scrollTop; // vertical scroll offset

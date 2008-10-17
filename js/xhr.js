@@ -1,11 +1,22 @@
 /**
  * XMLHttpRequest Wrapper Object
+ * @copyright Fiji Web Deisgn, GNU/GPL
  * @author gabe@fijiwebdesign.com
- * @copyright www.fijiwebdesign.com
+ * @url www.fijiwebdesign.com
+ * @version 0.1
  */
 phpshell.xhr = function(method, url, callback, async) {
 	this._init(method, url, callback, async);
 };
+/**
+ * @static ie_activex
+ * Holds IE6- XHR ActiveX version
+ */
+phpshell.xhr.ie_activex = false;
+	
+/**
+ * @Prototype Inherited Methods
+ */
 phpshell.xhr.prototype = {
 	
 	/**
@@ -25,12 +36,7 @@ phpshell.xhr.prototype = {
 			this.req(method, url, callback, async);	
 		}
 	},
-	
-	/**
-	 * Holds IEs XHR ActiveX version
-	 */
-	ie_activex: false,
-	
+
 	/**
 	 * Returns the platform dependent XHR Instance
 	 */
@@ -38,8 +44,8 @@ phpshell.xhr.prototype = {
 		if (window.XMLHttpRequest) {
 	        return new XMLHttpRequest();
 	    } else if (window.ActiveXObject) {
-	        if (ajaxchat.req.ie_activex) {
-	            return new ActiveXObject(ajaxchat.req.ie_activex);
+	        if (phpshell.xhr.ie_activex) {
+	            return new ActiveXObject(phpshell.xhr.ie_activex);
 	        } else {
 			    var axs = [
 					"Msxml2.XMLHTTP.6.0", 
@@ -52,8 +58,8 @@ phpshell.xhr.prototype = {
 	            for (var i = 0; i < axs.length ; i++) {
 	                try {
 	                    var xhr = new ActiveXObject(axs[i]);
-	                    if (self.xhr) {
-	                        ajaxchat.req.ie_activex = axs[i];
+	                    if (xhr) {
+	                        phpshell.xhr.ie_activex = axs[i];
 							return xhr;
 	                        break;
 	                    }
@@ -84,7 +90,7 @@ phpshell.xhr.prototype = {
 			try {
 				self.callback(self);
 			} catch(e) {
-				alert(e);
+				this.debug(e);
 			}
 	    }
 	
