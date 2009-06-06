@@ -7,7 +7,7 @@
 phpshell.client = {
 	// initiate
 	init: function() {
-		window.onload = function() {
+		phpshell.client.addEvent(window, 'load', function() {
 			
 			// get dom references
 			phpshell.client.cursor = document.getElementById('phpshell-cursor');
@@ -15,6 +15,8 @@ phpshell.client = {
 			phpshell.client.hiddeninput = document.getElementById('phpshell-hinput');
 			phpshell.client.shell = document.getElementById('phpshell-shell');
 			phpshell.client.results = document.getElementById('phpshell-results');
+			phpshell.client.prompt = document.getElementById('phpshell-prompt');
+			phpshell.client.php_checkbox = document.getElementById('phpshell-isphp');
 			
 			// activate shell if user clicks on it
 			phpshell.client.shell.onclick = function(e) {
@@ -26,12 +28,12 @@ phpshell.client = {
 				if (e.stopPropagation) e.stopPropagation();
 			};
 			// if user clicks anywhere else, deactivate shell
-			document.onclick = function() {
+			phpshell.client.addEvent(document, 'click', function() {
 				phpshell.client.active = false;
 				phpshell.client.setCursorBlink(false);
-			};
+			});
 			// catch all keypresses
-			document.onkeyup = function(e) {
+			phpshell.client.addEvent(document, 'keyup', function(e) {
 				if (!phpshell.client.active) {
 					return;
 				}
@@ -42,7 +44,7 @@ phpshell.client = {
 					// get current input
 					var input = phpshell.client.getInput();
 					// add command to screen
-					var prompt = phpshell.client.exec_as_php() ? 'php$ ' : '$ ';
+					var prompt = phpshell.client.getPrompt();
 					phpshell.client.addEntry(prompt+input);
 					// execute command
 					phpshell.client.sendCommand(input);
@@ -56,8 +58,26 @@ phpshell.client = {
 					phpshell.client.removeLastCharInput();
 					phpshell.client.removeLastCharHiddenInput();
 				}
-			};
-		};
+			});
+			// change prompt when user click checkbox
+			phpshell.client.addEvent(phpshell.client.php_checkbox, 'click', function() {
+				if (phpshell.client.php_checkbox.checked) {
+					phpshell.client.setPrompt('php$');
+				} else {
+					phpshell.client.setPrompt('$');
+				}
+			});
+		});
+	},
+	
+	addEvent: function(el, evType, fn, useCapture) {
+		if (el.addEventListener) {
+			el.addEventListener(evType, fn, useCapture);
+		} else if (el.attachEvent) {
+			el.attachEvent('on' + evType, fn);
+		} else {
+			el['on' + evType] = fn;
+		}
 	},
 	
 	setInput: function(str) {
@@ -97,6 +117,14 @@ phpshell.client = {
 		phpshell.client.cursor.innerHTML = str;
 	},
 	
+	setPrompt: function(str) {
+		phpshell.client.prompt.innerHTML = str;
+	},
+	
+	getPrompt: function(str) {
+		return phpshell.client.prompt.innerHTML;
+	},
+	
 	setCursorBlink: function(blink) {
 		clearInterval(phpshell.client.cursor_blink);
 		var cursor = phpshell.client.cursor;
@@ -112,7 +140,7 @@ phpshell.client = {
 	
 	// check if we want to execute code as php
 	exec_as_php: function() {
-		return document.getElementById('php').checked;
+		return phpshell.client.php_checkbox.checked;
 	},	
 	
 	// send a command
@@ -134,7 +162,7 @@ phpshell.client = {
 			var resp = req.xhr.responseText;
 			if (resp) {
 				phpshell.client.addEntry(resp);
-				phpshell.client.autoScroll(results, 500);
+				phpshell.client.autoScroll(phpshell.client.shell, 500);
 			}
 		}
 	},
