@@ -1,8 +1,5 @@
 Add a comment with a feature request and it will be added here.
 
-
-== Wish List ==
-
   # whitelist/blacklist
   # themes
   # auto suggest commands
