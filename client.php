@@ -12,15 +12,14 @@
 	</head>
 	<body>
 		<div id="phpshell-shell">
-			<div id="phpshell-results"></div>
+			<pre id="phpshell-results"></pre>
 			
+			<span id="phpshell-prompt">$</span>
 			<span id="phpshell-input"></span>
 			<span id="phpshell-cursor">|</span>
 		</div>
-
-		<form method="POST">
-			PHP <input type="checkbox" name="php" id="php" />
-		</form>
+		PHP <input type="checkbox" id="phpshell-isphp" name="phpshell-isphp" />
+		
 		<input id="phpshell-hinput" style="position:absolute;top:-1000;"/>
 	</body>
 </html>
