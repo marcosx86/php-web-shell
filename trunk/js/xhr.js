@@ -90,7 +90,7 @@ phpshell.xhr.prototype = {
 			try {
 				self.callback(self);
 			} catch(e) {
-				this.debug(e);
+				self.debug(e);
 			}
 	    }
 	

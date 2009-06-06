@@ -3,13 +3,19 @@
  * @author gabe@fijiwebdesign.com
  */
 
-#results {
+#phpshell-shell {
 	width: 100%;
 	height: 400px;
 	overflow: auto;
+	border: 1px solid black;
 }
 
- #cmd {
+ #phpshell-cmd {
  	width: 100%;
-	height: 200px;
+	height: 50px;
+	border: 0;
+ }
+ 
+ #phpshell-cursor {
+ 	visibility: hidden;
  }
