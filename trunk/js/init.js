@@ -162,7 +162,7 @@ phpshell.client = {
 			var resp = req.xhr.responseText;
 			if (resp) {
 				phpshell.client.addEntry(resp);
-				phpshell.client.autoScroll(phpshell.client.shell, 500);
+				phpshell.client.autoScroll(phpshell.client.shell, 5000);
 			}
 		}
 	},
@@ -182,7 +182,7 @@ phpshell.client = {
 	    var h = el.scrollHeight; // height of div
 	    var c = el.clientHeight; // scroll bar height
 	    if (h < (y + c + offset)) {
-	        el.scrollTop += 1000; // scroll down
+	        el.scrollTop += offset; // scroll down
 	    }
 	}
 };
