@@ -13,10 +13,8 @@
 	<body>
 		<div id="phpshell-shell">
 			<pre id="phpshell-results"></pre>
-			
-			<span id="phpshell-prompt">$</span>
-			<span id="phpshell-input"></span>
-			<span id="phpshell-cursor">|</span>
+			<span id="phpshell-prompt">guest@php-web-shell:~ $ </span>
+			<input id="phpshell-input" type="text" value="" autocomplete="off" name="command" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"/>
 		</div>
 		PHP <input type="checkbox" id="phpshell-isphp" name="phpshell-isphp" />
 		
