@@ -4,10 +4,29 @@
  */
 
 #phpshell-shell {
-	width: 100%;
+	width: 98%;
 	height: 400px;
 	overflow: auto;
 	border: 1px solid black;
+	padding: 5px;
+}
+
+#phpshell-prompt,#phpshell-input,#phpshell-results,#phpshell-cursor {
+   font-family:monospace;
+   font-size:12px;
+}
+#phpshell-results {
+	margin:0;
+    padding:0;
+	border:0 none;
+}
+#phpshell-input {
+    border:0 none;
+    font-family:monospace;
+    font-size:12px;
+    margin:0;
+    padding:0;
+    width:80%;
 }
 
  #phpshell-cmd {
