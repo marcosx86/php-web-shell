@@ -18,12 +18,15 @@ phpshell.client = {
 			phpshell.client.prompt = document.getElementById('phpshell-prompt');
 			phpshell.client.php_checkbox = document.getElementById('phpshell-isphp');
 			
+			// set focus on input
+			phpshell.client.input.focus();
+			phpshell.client.active = true;
+			
 			// activate shell if user clicks on it
 			phpshell.client.shell.onclick = function(e) {
 				e = e || window.event;
+				phpshell.client.input.focus();
 				phpshell.client.active = true;
-				phpshell.client.setCursorBlink(true);
-				phpshell.client.hiddeninput.focus();
 				e.cancelBubble = true;
 				if (e.stopPropagation) e.stopPropagation();
 			};
@@ -81,19 +84,19 @@ phpshell.client = {
 	},
 	
 	setInput: function(str) {
-		phpshell.client.input.innerHTML = str;
+		phpshell.client.input.value = str;
 	},
 	
 	getInput: function() {
-		return phpshell.client.input.innerHTML;
+		return phpshell.client.input.value;
 	},
 	
 	addInput: function(str) {
-		phpshell.client.input.innerHTML += str;
+		phpshell.client.input.value += str;
 	},
 	
 	clearInput: function(str) {
-		phpshell.client.input.innerHTML = '';
+		phpshell.client.input.value = '';
 	},
 	removeLastCharInput: function() {
 		var input = phpshell.client.input;
